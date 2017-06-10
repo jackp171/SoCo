@@ -683,6 +683,32 @@ class SoCo(_SocoSingletonBase):
             ('Channel', 'Master'),
             ('DesiredMute', mute_value)
         ])
+    
+    def outputFixed(self):
+        """The speaker's output fixed state
+
+        True if fixed, False otherwise
+        """
+        response = self.renderingControl.GetOutputFixed([
+            ('InstanceID', 0)
+        ])
+        fixed_state = response['CurrentFixed']
+
+        return True if int(fixed_state) else False
+
+    def outputFixedOn(self):
+        """Toggle fixed output on """
+        self.renderingControl.SetOutputFixed([
+            ('InstanceID', 0),
+            ('DesiredFixed', "1")
+        ])
+
+    def outputFixedOff(self):
+        """Toggle fixed output off """
+        self.renderingControl.SetOutputFixed([
+            ('InstanceID', 0),
+            ('DesiredFixed', "0")
+        ])
 
     @property
     def volume(self):
